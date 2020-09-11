@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { tap } from "rxjs/operators";
 import { AuthActions } from "./action-types";
@@ -18,6 +19,21 @@ export class AuthEffects {
     { dispatch: false }
   );
 
-  constructor(private actions$: Actions) { }
+  /**
+   * Logout effect to remove user from localstorage
+   */
+  logout$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.logout),
+      tap(() => {
+        localStorage.removeItem('user');
+        this.router.navigateByUrl('/login');
+      })
+    )},
+    // No further action dispatch
+    { dispatch: false }
+  );
+
+  constructor(private actions$: Actions, private router: Router) { }
 
 }

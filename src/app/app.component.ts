@@ -6,6 +6,7 @@ import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Route
 import { AppState } from './reducers';
 import { isLoggedIn, isLoggedOut } from './auth/auth.selectors';
 import { AuthActions } from './auth/action-types';
+import { User } from './auth/model/user.model';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,11 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+
+      const user: User = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        this.store.dispatch(AuthActions.login({user}));
+      }
 
       this.router.events.subscribe(event  => {
         switch (true) {
@@ -53,7 +59,6 @@ export class AppComponent implements OnInit {
 
     logout() {
       this.store.dispatch(AuthActions.logout());
-      this.router.navigateByUrl('/login');
     }
 
 }
