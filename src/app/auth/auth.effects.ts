@@ -10,11 +10,13 @@ export class AuthEffects {
   /**
    * Login effect to save user to localstorage
    */
-  login$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(AuthActions.login),
-      tap((action) => localStorage.setItem('user', JSON.stringify(action.user)))
-    )},
+  login$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(AuthActions.login),
+        tap((action) => localStorage.setItem('user', JSON.stringify(action.user)))
+      )
+    },
     // No further action dispatch
     { dispatch: false }
   );
@@ -22,14 +24,16 @@ export class AuthEffects {
   /**
    * Logout effect to remove user from localstorage
    */
-  logout$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(AuthActions.logout),
-      tap(() => {
-        localStorage.removeItem('user');
-        this.router.navigateByUrl('/login');
-      })
-    )},
+  logout$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(AuthActions.logout),
+        tap(() => {
+          localStorage.removeItem('user');
+          this.router.navigateByUrl('/login');
+        })
+      )
+    },
     // No further action dispatch
     { dispatch: false }
   );

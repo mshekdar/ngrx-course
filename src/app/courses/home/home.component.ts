@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   }
 
   reload() {
-    this.beginnerCourses$ = this.store.pipe(select(coursesSelectors.selectAllCourses));
+    this.beginnerCourses$ = this.store.pipe(select(coursesSelectors.selectBeginnerCourses));
     this.advancedCourses$ = this.store.pipe(select(coursesSelectors.selectAdvancedCourses));
     this.promoTotal$ = this.store.pipe(select(coursesSelectors.selectPromoTotal));
   }

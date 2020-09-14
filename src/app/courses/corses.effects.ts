@@ -14,10 +14,27 @@ export class CorsesEffects {
         concatMap(action => {
           return this.coursesHttpService.findAllCourses();
         }),
-        map(courses => CourseActions.allCoursesLoaded({courses}))
+        map(courses => CourseActions.allCoursesLoaded({ courses }))
       )
     }
   )
-  constructor(private actions$: Actions, private coursesHttpService: CoursesHttpService) { }
+
+  saveCourse$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(CourseActions.courseUpdated),
+        concatMap(action => {
+          return this.coursesHttpService.saveCourse(action.update.id, action.update.changes);
+        })
+      )
+    },
+    // No further action dispatch
+    { dispatch: false }
+  )
+
+  constructor(
+    private actions$: Actions,
+    private coursesHttpService: CoursesHttpService
+  ) { }
 
 }
