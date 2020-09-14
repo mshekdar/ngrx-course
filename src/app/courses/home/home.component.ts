@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { compareCourses, Course } from '../model/course';
+import { Course } from '../model/course';
 import { Observable } from "rxjs";
 import { defaultDialogConfig } from '../shared/default-dialog-config';
 import { EditCourseDialogComponent } from '../edit-course-dialog/edit-course-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { map, shareReplay } from 'rxjs/operators';
-import { CoursesHttpService } from '../services/courses-http.service';
 import { CourseState } from '../reducers/course.reducers';
 import { select, Store } from '@ngrx/store';
 import * as coursesSelectors from '../courses.selectors';
