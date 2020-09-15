@@ -48,7 +48,9 @@ export const coursesRoutes: Routes = [
 ];
 
 const entityMetData: EntityMetadataMap = {
-  Course: {}
+  Course: {
+    sortComparer: compareCourses
+  }
 };
 
 @NgModule({
