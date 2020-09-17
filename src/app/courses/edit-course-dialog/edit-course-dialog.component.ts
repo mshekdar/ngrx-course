@@ -1,9 +1,9 @@
-import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {Course} from '../model/course';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {CoursesHttpService} from '../services/courses-http.service';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Course } from '../model/course';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { CoursesHttpService } from '../services/courses-http.service';
 import { CourseEntityService } from '../services/course-entity.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class EditCourseDialogComponent {
 
   mode: 'create' | 'update';
 
-  loading$:Observable<boolean>;
+  loading$: Observable<boolean>;
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +42,7 @@ export class EditCourseDialogComponent {
 
     if (this.mode == 'update') {
       this.form = this.fb.group(formControls);
-      this.form.patchValue({...data.course});
+      this.form.patchValue({ ...data.course });
     }
     else if (this.mode == 'create') {
       this.form = this.fb.group({
@@ -64,10 +64,17 @@ export class EditCourseDialogComponent {
       ...this.form.value
     };
 
-    if(this.mode == 'update') {
+    if (this.mode == 'update') {
       this.courseEntityService.update(course)
+      this.dialogRef.close();
     }
-    this.dialogRef.close()
+
+    if (this.mode == 'create') {
+      this.courseEntityService.add(course).subscribe((newAdded) => {
+        console.log('newAdded', newAdded);
+        this.dialogRef.close();
+      })
+    }
 
   }
 
